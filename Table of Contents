@@ -1,0 +1,29 @@
+Sub GenerateTOC()
+Dim i As Long
+On Error Resume Next
+Application.DisplayAlerts = False
+Worksheets("TOC").Delete
+Application.DisplayAlerts = True
+On Error GoTo 0
+ThisWorkbook.Sheets.Add Before:=ThisWorkbook.Worksheets(1)
+ActiveSheet.Name = "TOC"
+With ActiveSheet
+    .Name = "TOC"
+    With .Range("A1:B1")
+        .Value = VBA.Array("#", "Sheet")
+        .Font.Bold = True
+    End With
+End With
+For i = 2 To Sheets.Count
+With ActiveSheet
+.Hyperlinks.Add _
+Anchor:=ActiveSheet.Cells(i, 2), _
+Address:="", _
+SubAddress:="'" & Sheets(i).Name & "'!C2", _
+ScreenTip:=Sheets(i).Name, _
+TextToDisplay:=Sheets(i).Name
+.Cells(i, 1).Value = CStr(i - 1)
+End With
+Next i
+ThisWorkbook.Worksheets("TOC").Cells.EntireColumn.AutoFit
+End Sub
