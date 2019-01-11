@@ -1,0 +1,14 @@
+'Select Range of cells with Hex values
+'Then run this macro
+'Macros will colour fill based on value
+Sub ColorCellsByHex()
+  Dim rSelection As Range, rCell As Range, tHex As String
+
+  If TypeName(Selection) = "Range" Then
+  Set rSelection = Selection
+    For Each rCell In rSelection
+      tHex = Mid(rCell.Text, 6, 2) & Mid(rCell.Text, 4, 2) & Mid(rCell.Text, 2, 2)
+      rCell.Interior.Color = WorksheetFunction.Hex2Dec(tHex)
+    Next
+  End If
+End Sub
